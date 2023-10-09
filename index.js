@@ -1,6 +1,10 @@
-var amqp = require("amqplib/callback_api");
+const connectTODatabase = require('./db');
 
-var i = 0;
+const amqp = require("amqplib/callback_api");
+
+connectTODatabase();
+
+let i = 0;
 setInterval(function () {
   if (i < 10) {
     sendData(i);
@@ -17,8 +21,8 @@ function sendData(i) {
       if (error1) {
         throw error1;
       }
-      var queue = "hello";
-      var msg = `message number ${i} sent`;
+      let queue = "fetchData";
+      let msg = `message number ${i} sent`;
 
       channel.assertQueue(queue, {
         durable: true,
